@@ -45,4 +45,4 @@ jobs:
       # 7️⃣ Deploy to GCS
       - name: Deploy to GCS
         run: |
-          gcloud storage rsync dist/ gs://luminx-frontend-builds/$GITHUB_SHA --recursive
+          gcloud storage rsync dist/ gs://luminx-frontend-builds --recursive --delete
