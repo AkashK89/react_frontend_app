@@ -13,7 +13,7 @@ jobs:
       id-token: write   # REQUIRED for WIF
 
     steps:
-      # 1️⃣ Checkout code
+      # 1️⃣ Checkout repo
       - name: Checkout
         uses: actions/checkout@v4
 
@@ -27,22 +27,27 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      # 4️⃣ Build project
+      # 4️⃣ Build frontend
       - name: Build
         run: npm run build
 
-      # 5️⃣ Authenticate to GCP via WIF
+      # 5️⃣ Authenticate to GCP (WIF)
       - name: Authenticate to GCP
         uses: google-github-actions/auth@v2
         with:
           workload_identity_provider: projects/528370594078/locations/global/workloadIdentityPools/github-frontend-pool/providers/github-frontend-provider
           service_account: github-ci@luminx-494015.iam.gserviceaccount.com
 
-      # 6️⃣ Setup gcloud
+      # 6️⃣ Setup gcloud CLI
       - name: Setup gcloud
         uses: google-github-actions/setup-gcloud@v2
 
-      # 7️⃣ Deploy to GCS
+      # 7️⃣ Clean bucket (remove old files)
+      - name: Clean bucket
+        run: |
+          gcloud storage rm gs://luminx-frontend-builds/** --recursive || true
+
+      # 8️⃣ Upload new build
       - name: Deploy to GCS
         run: |
-          gcloud storage rsync dist/ gs://luminx-frontend-builds/$GITHUB_SHA --recursive
+          gcloud storage rsync dist/ gs://luminx-frontend-builds --recursive
