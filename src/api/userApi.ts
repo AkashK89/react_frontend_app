@@ -1,4 +1,4 @@
-const BASE_URL = import.meta.env.VITE_API_URL;
+const BASE_URL = import.meta.env.VITE_API_URL || 'https://nestjs-app-528370594078.asia-south1.run.app/api';
 
 export const createUser = async (data: any) => {
   const res = await fetch(`${BASE_URL}/users`, {
