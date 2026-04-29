@@ -28,11 +28,16 @@ jobs:
         run: npm install
 
       # 4️⃣ Build frontend
-      - name: Build |
-        echo "Using API: $VITE_API_URL"
-        run: npm run build
+      # - name: Build |
+      #   echo "Using API: $VITE_API_URL"
+      #   run: npm run build
+      #   env:
+      - name: Build
+        run: |
+          echo "Using API: $VITE_API_URL"
+          npm run build
         env:
-            VITE_API_URL: https://nestjs-app-528370594078.asia-south1.run.app/api
+          VITE_API_URL: https://nestjs-app-528370594078.asia-south1.run.app/api
 
       # 5️⃣ Authenticate to GCP (WIF)
       - name: Authenticate to GCP
