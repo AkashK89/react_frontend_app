@@ -27,7 +27,7 @@ export default function UserList({ refresh }: any) {
         <ul>
           {users.map((u, i) => (
             <li key={i}>
-              {u.name} - {u.email}
+              {u.name} - {u.email} - {u.mobile_number}
             </li>
           ))}
         </ul>
